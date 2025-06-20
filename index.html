@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overboost Duel Score Calculator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      color: #333;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1em;
+    }
+    .tier {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 320px;
+      margin: 10px 0;
+    }
+    label {
+      flex: 1;
+    }
+    input {
+      width: 60px;
+      font-size: 1.2rem;
+      padding: 5px;
+      text-align: center;
+    }
+    #total {
+      margin-top: 30px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Overboost Duel Score Calculator</h1>
+  <div class="tier"><label>🟣 Hypercar (x5)</label><input type="number" id="hypercar" value="0" min="0"></div>
+  <div class="tier"><label>⚪ Legend (x5)</label><input type="number" id="legend" value="0" min="0"></div>
+  <div class="tier"><label>🔵 Supercar (x3)</label><input type="number" id="supercar" value="0" min="0"></div>
+  <div class="tier"><label>🟡 Super SUV (x3)</label><input type="number" id="supersuv" value="0" min="0"></div>
+  <div class="tier"><label>🟢 Sports Car (x2)</label><input type="number" id="sports" value="0" min="0"></div>
+  <div class="tier"><label>🔴 Muscle (x1)</label><input type="number" id="muscle" value="0" min="0"></div>
+
+  <div id="total">🏆 Total Score: 0</div>
+  <button onclick="resetForm()">Reset</button>
+
+  <script>
+    const inputs = document.querySelectorAll('input');
+
+    function calculateScore() {
+      const weights = {
+        hypercar: 5,
+        legend: 5,
+        supercar: 3,
+        supersuv: 3,
+        sports: 2,
+        muscle: 1
+      };
+      let total = 0;
+      for (const input of inputs) {
+        const id = input.id;
+        total += (parseInt(input.value) || 0) * weights[id];
+      }
+      document.getElementById('total').textContent = `🏆 Total Score: ${total}`;
+    }
+
+    function resetForm() {
+      inputs.forEach(input => input.value = 0);
+      calculateScore();
+    }
+
+    inputs.forEach(input => input.addEventListener('input', calculateScore));
+    calculateScore();
+  </script>
+</body>
+</html>
